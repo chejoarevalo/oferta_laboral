@@ -1,0 +1,62 @@
+<%= form_for(@job) do |f| %>
+  <% if @job.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@job.errors.count, "error") %> prohibited this job from being saved:</h2>
+
+      <ul>
+      <% @job.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :company %><br />
+    <%= f.text_field :company %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :salary %><br />
+    <%= f.text_field :salary %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<script type="text/javascript">
+	function job_validate_field(element, min_length, max_length) {
+		var value = element.val();
+		if (value.length < min_length){
+			element.css("border-color","red");
+			alert("El campo ingresado es demasiado corto");
+		} else if ( value.length > max_length){
+			element.css("border-color","red");
+			alert("El campo ingresado es demasiado largo");
+		}
+	}
+
+	function valida_correo(element){
+		var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+		var address = element.val()
+		if(reg.test(address) == false) {
+		    // Validation Failed
+		    alert('Please enter a valid email address.');
+		}
+	}
+
+	jQuery("#job_title").blur(function(){job_validate_field(jQuery(this), 6, 30);});
+	jQuery("#job_email").blur(function(){valida_correo(jQuery(this));});
+</script>
+<% end %>
+
